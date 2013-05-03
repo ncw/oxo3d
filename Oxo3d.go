@@ -1,5 +1,16 @@
 package main
 
+/*
+Shouldn't really need state in the players
+
+Should initialise from the board from flat each time
+
+Which makes them functions probably with subfunctions
+
+Note that the evaluation isn't being updated properly because of that - when the human plays it goes wrong
+
+*/
+
 // FIXME make it so can serialize and unserialize the game for save/load
 
 import (
@@ -294,10 +305,6 @@ func (o *Oxo3d) gameOver() bool {
 	return o.whoWon() != NOONE
 }
 
-// Override in base classes if desired to be called after play or unplay has executed
-// func (o *Oxo3d) updateEvaluation(Go int, who int, encodedWho int, unplay bool) {
-// }
-
 // Keep internal state up to date when a piece is played
 func (o *Oxo3d) play(Go int, myGo bool) {
 	if Go < 0 || Go >= 64 {
@@ -332,7 +339,6 @@ func (o *Oxo3d) play(Go int, myGo bool) {
 	}
 	o.isMyGo = !o.isMyGo
 	//isMyGo = false; // FIXME
-	//o.updateEvaluation(Go, who, encodedWho, false)
 }
 
 // Unplay the last move keeping internal state up to date
@@ -364,7 +370,6 @@ func (o *Oxo3d) unplay() {
 		o.lines[a] -= encodedWho
 	}
 	o.isMyGo = !o.isMyGo
-	// o.updateEvaluation(Go, who, encodedWho, true)
 }
 
 // Calculate and do the computer move
@@ -535,9 +540,9 @@ func (p *Oxo3dMinMax) findBestMove(myGo bool, level int) int {
 	}
 	for Go := range p.o.board {
 		if p.o.board[Go] == 0 {
-			old_eval := p.evaluation
+			old_evaluation := p.evaluation
 			p.o.play(Go, myGo)
-			p.updateEvaluation(Go, myGo, false)
+			p.updateEvaluation(Go, myGo)
 			score := 0
 			if level <= 1 || p.o.whoWon() != NOONE {
 				score = p.evaluation
@@ -549,10 +554,7 @@ func (p *Oxo3dMinMax) findBestMove(myGo bool, level int) int {
 				score = p.findBestMove(!myGo, level-1)
 			}
 			p.o.unplay()
-			p.updateEvaluation(Go, myGo, true)
-			if p.evaluation != old_eval {
-				panic("Evaluation is wrong")
-			}
+			p.evaluation = old_evaluation
 			comparison := true
 			if myGo {
 				comparison = (score > bestScore)
@@ -581,13 +583,10 @@ func (p *Oxo3dMinMax) findBestMove(myGo bool, level int) int {
 }
 
 // update evaluation after a go by who
-func (p *Oxo3dMinMax) updateEvaluation(Go int, myGo bool, unplay bool) {
+func (p *Oxo3dMinMax) updateEvaluation(Go int, myGo bool) {
 	encodedWho := XS
 	if !myGo {
 		encodedWho = OS
-	}
-	if unplay {
-		encodedWho = -encodedWho
 	}
 	for _, a := range moveb[Go] {
 		ox := p.o.lines[a]
@@ -625,9 +624,9 @@ func (p *Oxo3dAlphaBeta) findBestMove(myGo bool, level int, alpha int, beta int)
 	}
 	for Go := range p.o.board {
 		if p.o.board[Go] == 0 {
-			old_eval := p.evaluation
+			old_evaluation := p.evaluation
 			p.o.play(Go, myGo)
-			p.updateEvaluation(Go, myGo, false)
+			p.updateEvaluation(Go, myGo)
 			score := 0
 			if level <= 1 || p.o.whoWon() != NOONE {
 				score = p.evaluation
@@ -639,10 +638,7 @@ func (p *Oxo3dAlphaBeta) findBestMove(myGo bool, level int, alpha int, beta int)
 				score = p.findBestMove(!myGo, level-1, alpha, beta)
 			}
 			p.o.unplay()
-			p.updateEvaluation(Go, myGo, true)
-			if p.evaluation != old_eval {
-				panic("Evaluation is wrong")
-			}
+			p.evaluation = old_evaluation
 			comparison := true
 			if myGo {
 				comparison = (score > bestScore)
@@ -681,7 +677,6 @@ func (p *Oxo3dAlphaBeta) calculateMyGo() int {
 
 func main() {
 	rand.Seed(time.Now().UnixNano())
-	// FIXME updateEvaluation not being called properly
 	o := NewOxo3d(true)
 	//p := NewOxo3dHeuristic(o, 2)
 	//p := NewOxo3dMinMax(o, 4)
