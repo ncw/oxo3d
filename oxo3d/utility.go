@@ -1,4 +1,4 @@
-package main
+package oxo3d
 
 // Returns the minimum of a and b
 func min(a, b int) int {
