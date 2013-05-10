@@ -188,6 +188,18 @@ func (o *Oxo3d) IsMyGo() bool {
 	return o.isMyGo
 }
 
+// Returns true if the move is to an empty square
+// Returns false if occupied or invalid
+func (o *Oxo3d) ValidMove(Go int) bool {
+	if Go < 0 || Go >= 64 {
+		return false
+	}
+	if o.board[Go] != NOONE {
+		return false
+	}
+	return true
+}
+
 // Print the board
 func (o *Oxo3d) Print() {
 	win := o.WhoWon()
@@ -243,11 +255,8 @@ func (o *Oxo3d) GameOver() bool {
 
 // Keep internal state up to date when a piece is played
 func (o *Oxo3d) Play(Go int, myGo bool) {
-	if Go < 0 || Go >= 64 {
-		panic("Illegal move: out of range")
-	}
-	if o.board[Go] != NOONE {
-		panic("Illegal move: board position occupied")
+	if !o.ValidMove(Go) {
+		panic("Illegal move")
 	}
 	who := ME
 	encodedWho := XS
@@ -308,16 +317,6 @@ func (o *Oxo3d) UnPlay() {
 	o.isMyGo = !o.isMyGo
 }
 
-// Calculate and do the computer move
-// func (o *Oxo3d) myGo() int {
-//     	// Make copies of marks and board
-//     	o.thinking = true
-//         Go := o.CalculateMyGo()
-//         o.Play(Go, true)
-//     	o.thinking = false
-//         return Go
-// }
-
 // Computer move
 //func (o *Oxo3d) CalculateMyGo() int {
 //	return 0
@@ -339,6 +338,11 @@ func (o *Oxo3d) ReadYourGo() int {
 	fmt.Printf("Going at %d\n", Go)
 	o.YourGo(Go)
 	return Go
+}
+
+// Do the computer move
+func (o *Oxo3d) MyGo(Go int) {
+	o.Play(Go, true)
 }
 
 // Do the opponents move

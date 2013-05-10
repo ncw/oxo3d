@@ -64,7 +64,7 @@ type Oxo3dHeuristic struct {
 }
 
 // Initialise the player
-func NewOxo3dHeuristic(o *Oxo3d, level int) *Oxo3dHeuristic {
+func NewOxo3dHeuristic(o *Oxo3d, level int) Player {
 	p := &Oxo3dHeuristic{
 		level: level,
 		o:     o,

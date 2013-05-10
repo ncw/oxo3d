@@ -36,7 +36,7 @@ type Oxo3dMinimax struct {
 }
 
 // Initialise the player
-func NewOxo3dMinimax(o *Oxo3d, level int) *Oxo3dMinimax {
+func NewOxo3dMinimax(o *Oxo3d, level int) Player {
 	p := &Oxo3dMinimax{
 		level:     level,
 		o:         o,

@@ -10,9 +10,9 @@ type Oxo3dAlphaBeta struct {
 }
 
 // Initialise the player
-func NewOxo3dAlphaBeta(o *Oxo3d, level int) *Oxo3dAlphaBeta {
+func NewOxo3dAlphaBeta(o *Oxo3d, level int) Player {
 	p := &Oxo3dAlphaBeta{
-		Oxo3dMinimax: *NewOxo3dMinimax(o, level),
+		Oxo3dMinimax: *NewOxo3dMinimax(o, level).(*Oxo3dMinimax),
 	}
 	return p
 }
