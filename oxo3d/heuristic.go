@@ -5,6 +5,27 @@ import (
 	"math/rand"
 )
 
+// Constants
+const (
+	// Names for costs
+	NONE = 0  // Nothing
+	O1   = 1  // 1 * O
+	O2   = 2  // 2 * O
+	O3   = 3  // 3 * O
+	O4   = 4  // 4 * O
+	X1   = 5  // 1 * X
+	X2   = 6  // 2 * X
+	X3   = 7  // 3 * X
+	X4   = 8  // 4 * X
+	O11  = 9  // An empty square with 1 * O and 1 * O
+	O12  = 10 // An empty square with 1 * O and 2 * O
+	O22  = 11 // An empty square with 2 * O and 2 * O
+	X11  = 12 // An empty square with 1 * X and 1 * X
+	X12  = 13 // An empty square with 1 * X and 2 * X
+	X22  = 14 // An empty square with 2 * X and 2 * X
+	JUNK = 15 // A line with both Os and Xs
+)
+
 // Global variables
 var (
 	xlinesx     [maxEncodedOxCount]int

@@ -31,24 +31,6 @@ const (
 	YOU   = -1
 	DRAW  = 2
 
-	// names for numbers of lines
-	NONE = 0
-	O1   = 1
-	O2   = 2
-	O3   = 3
-	O4   = 4
-	X1   = 5
-	X2   = 6
-	X3   = 7
-	X4   = 8
-	O11  = 9
-	O12  = 10
-	O22  = 11
-	X11  = 12
-	X12  = 13
-	X22  = 14
-	JUNK = 15
-
 	// A score larger than any possible score
 	INF = 0x7FFFFFFF
 )
