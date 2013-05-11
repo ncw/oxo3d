@@ -7,25 +7,33 @@ import (
 
 // Global variables
 var (
-	cost [maxEncodedOxCount]int
+	cost     [maxEncodedOxCount]int
+	yourCost [maxEncodedOxCount]int
 )
 
 // Initialise the global variables
 func init() {
 	// Evaluation of lines.  We are X and these count the score of the encoded O & X count
-	// Player    Minimax1 Score   -26
-	// Player Heuristic1 Score    -3
-	// Player Heuristic2 Score    -2
-	// Player    Minimax2 Score     3
-	// Player    Minimax3 Score    28
+
+	// My X Go
 	cost[OS*4] = -0x10000000
 	cost[OS*3] = -0x100000
 	cost[OS*2] = -0x1000
 	cost[OS*1] = -0x1
-	cost[XS*1] = 0x10
+	cost[XS*1] = 0x10 // prefer to make new lines over blocking old ones
 	cost[XS*2] = 0x1000
 	cost[XS*3] = 0x100000
 	cost[XS*4] = 0x10000000
+
+	// Your O Go
+	yourCost[XS*4] = -cost[OS*4]
+	yourCost[XS*3] = -cost[OS*3]
+	yourCost[XS*2] = -cost[OS*2]
+	yourCost[XS*1] = -cost[OS*1]
+	yourCost[OS*1] = -cost[XS*1]
+	yourCost[OS*2] = -cost[XS*2]
+	yourCost[OS*3] = -cost[XS*3]
+	yourCost[OS*4] = -cost[XS*4]
 }
 
 type Oxo3dMinimax struct {
@@ -101,13 +109,25 @@ func (p *Oxo3dMinimax) findBestMove(myGo bool, level int) int {
 // update evaluation after a go by who
 func (p *Oxo3dMinimax) updateEvaluation(Go int, myGo bool) {
 	encodedWho := XS
+	pcost := &cost
 	if !myGo {
 		encodedWho = OS
+		pcost = &yourCost
 	}
 	for _, a := range moveb[Go] {
 		ox := p.o.lines[a]
-		p.evaluation += cost[ox] - cost[ox-encodedWho]
+		p.evaluation += pcost[ox] - pcost[ox-encodedWho]
 	}
+	/*
+		// Check the evaluation shortcut is working
+		evaluation := 0
+		for _, ox := range p.o.lines {
+			evaluation += pcost[ox]
+		}
+		if evaluation != p.evaluation {
+			fmt.Printf("evaluation %d should be %d\n", p.evaluation, evaluation)
+		}
+	*/
 }
 
 // Do the computer move
