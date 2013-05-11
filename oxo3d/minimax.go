@@ -135,3 +135,9 @@ func (p *Oxo3dMinimax) CalculateMyGo() int {
 	p.findBestMove(true, p.level)
 	return p.bestMoves[rand.Intn(len(p.bestMoves))]
 }
+
+// Do a move
+func (p *Oxo3dMinimax) Play(Go int, myGo bool) {
+	p.o.Play(Go, myGo)
+	p.updateEvaluation(Go, myGo)
+}

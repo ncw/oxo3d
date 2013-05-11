@@ -177,3 +177,8 @@ func (p *Oxo3dHeuristic) CalculateMyGo() int {
 	}
 	return myPlay[rand.Intn(len(myPlay))]
 }
+
+// Do a move
+func (p *Oxo3dHeuristic) Play(Go int, myGo bool) {
+	p.o.Play(Go, myGo)
+}

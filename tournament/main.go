@@ -52,16 +52,17 @@ func (ps Players) Swap(i, j int) {
 var players = Players{
 	//{NewPlayer: oxo3d.NewOxo3dRandom, Level: 0, Name: "Random"},
 	//{NewPlayer: oxo3d.NewOxo3dHeuristic, Level: 0, Name: "Heuristic0"},
-	//{NewPlayer: oxo3d.NewOxo3dHeuristic, Level: 1, Name: "Heuristic1"},
+	{NewPlayer: oxo3d.NewOxo3dHeuristic, Level: 1, Name: "Heuristic1"},
 	//{NewPlayer: oxo3d.NewOxo3dHeuristic, Level: 2, Name: "Heuristic2"},
 	//{NewPlayer: oxo3d.NewOxo3dMinimax, Level: 0, Name: "Minimax0"},
 	//{NewPlayer: oxo3d.NewOxo3dMinimax, Level: 1, Name: "Minimax1"},
 	//{NewPlayer: oxo3d.NewOxo3dMinimax, Level: 2, Name: "Minimax2"},
+	//{NewPlayer: oxo3d.NewOxo3dMinimax, Level: 3, Name: "Minimax3"},
 	//{NewPlayer: oxo3d.NewOxo3dAlphaBeta, Level: 0, Name: "AlphaBeta0"},
 	{NewPlayer: oxo3d.NewOxo3dAlphaBeta, Level: 1, Name: "AlphaBeta1"},
 	{NewPlayer: oxo3d.NewOxo3dAlphaBeta, Level: 2, Name: "AlphaBeta2"},
 	{NewPlayer: oxo3d.NewOxo3dAlphaBeta, Level: 3, Name: "AlphaBeta3"},
-	//{NewPlayer: oxo3d.NewOxo3dAlphaBeta, Level: 4, Name: "AlphaBeta4"},
+	{NewPlayer: oxo3d.NewOxo3dAlphaBeta, Level: 4, Name: "AlphaBeta4"},
 }
 
 type stats struct {
@@ -80,37 +81,34 @@ func doRound(a, b *Player, first bool, s *stats) {
 	b_game := oxo3d.NewOxo3d(!first)
 	a_player := a.NewPlayer(a_game, a.Level)
 	b_player := b.NewPlayer(b_game, b.Level)
+	Go := -1
 	// Make first two moves randomly
-	Go := rand.Intn(64)
-	a_game.Play(Go, a_game.IsMyGo())
-	b_game.Play(Go, b_game.IsMyGo())
-	for {
+	for i := 0; i < 2; {
 		Go = rand.Intn(64)
 		if a_game.ValidMove(Go) {
-			break
+			a_player.Play(Go, a_game.IsMyGo())
+			b_player.Play(Go, b_game.IsMyGo())
+			i++
 		}
 	}
-	a_game.Play(Go, a_game.IsMyGo())
-	b_game.Play(Go, b_game.IsMyGo())
 	for !a_game.GameOver() {
 		start := time.Now()
-		if a_game.IsMyGo() {
+		asGo := a_game.IsMyGo()
+		if asGo {
 			Go = a_player.CalculateMyGo()
 			s.Lock()
 			s.a_time += time.Since(start)
 			s.a_gos += 1
 			s.Unlock()
-			a_game.MyGo(Go)
-			b_game.YourGo(Go)
 		} else {
 			Go = b_player.CalculateMyGo()
 			s.Lock()
 			s.b_time += time.Since(start)
 			s.b_gos += 1
 			s.Unlock()
-			b_game.MyGo(Go)
-			a_game.YourGo(Go)
 		}
+		a_player.Play(Go, asGo)
+		b_player.Play(Go, !asGo)
 	}
 	s.Lock()
 	switch a_game.WhoWon() {

@@ -27,3 +27,8 @@ func (p *Oxo3dRandom) CalculateMyGo() int {
 	}
 	return -1
 }
+
+// Do a move
+func (p *Oxo3dRandom) Play(Go int, myGo bool) {
+	p.o.Play(Go, myGo)
+}

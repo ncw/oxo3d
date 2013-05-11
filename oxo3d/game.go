@@ -13,6 +13,8 @@ Note that the evaluation isn't being updated properly because of that - when the
 
 // FIXME make it so can serialize and unserialize the game for save/load
 
+// FIXME could declare draw when no more lines are available?
+
 import (
 	"fmt"
 )

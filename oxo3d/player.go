@@ -3,6 +3,7 @@ package oxo3d
 
 type Player interface {
 	CalculateMyGo() int
+	Play(int, bool)
 }
 
 // Check the interfaces
