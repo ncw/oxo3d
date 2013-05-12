@@ -13,6 +13,13 @@ var (
 
 // Initialise the global variables
 func init() {
+	// Register this player
+	Players["Minimax0"] = func(o *Oxo3d) Player { return NewOxo3dMinimax(o, 0) }
+	Players["Minimax1"] = func(o *Oxo3d) Player { return NewOxo3dMinimax(o, 1) }
+	Players["Minimax2"] = func(o *Oxo3d) Player { return NewOxo3dMinimax(o, 2) }
+	Players["Minimax3"] = func(o *Oxo3d) Player { return NewOxo3dMinimax(o, 3) }
+	Players["Minimax4"] = func(o *Oxo3d) Player { return NewOxo3dMinimax(o, 4) }
+
 	// Evaluation of lines.  We are X and these count the score of the encoded O & X count
 
 	// My X Go

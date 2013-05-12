@@ -9,6 +9,15 @@ type Oxo3dAlphaBeta struct {
 	Oxo3dMinimax
 }
 
+func init () {
+	// Register this player
+	Players["AlphaBeta0"] = func(o *Oxo3d) Player { return NewOxo3dAlphaBeta(o, 0) }
+	Players["AlphaBeta1"] = func(o *Oxo3d) Player { return NewOxo3dAlphaBeta(o, 1) }
+	Players["AlphaBeta2"] = func(o *Oxo3d) Player { return NewOxo3dAlphaBeta(o, 2) }
+	Players["AlphaBeta3"] = func(o *Oxo3d) Player { return NewOxo3dAlphaBeta(o, 3) }
+	Players["AlphaBeta4"] = func(o *Oxo3d) Player { return NewOxo3dAlphaBeta(o, 4) }
+}
+
 // Initialise the player
 func NewOxo3dAlphaBeta(o *Oxo3d, level int) Player {
 	p := &Oxo3dAlphaBeta{

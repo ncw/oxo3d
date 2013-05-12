@@ -44,6 +44,11 @@ var (
 
 // Initialise the global variables
 func init() {
+	// Register this player
+	Players["Heuristic0"] = func(o *Oxo3d) Player { return NewOxo3dHeuristic(o, 0) }
+	Players["Heuristic1"] = func(o *Oxo3d) Player { return NewOxo3dHeuristic(o, 1) }
+	Players["Heuristic2"] = func(o *Oxo3d) Player { return NewOxo3dHeuristic(o, 2) }
+
 	// This keeps score when counting lines
 	for i := range xlinesx {
 		xlinesx[i] = JUNK

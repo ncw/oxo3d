@@ -6,6 +6,11 @@ type Player interface {
 	Play(int, bool)
 }
 
+type NewPlayer func(*Oxo3d) Player
+
+// Registry of players
+var Players = map[string]NewPlayer{}
+
 // Check the interfaces
 var _ Player = (*Oxo3dHeuristic)(nil)
 var _ Player = (*Oxo3dMinimax)(nil)

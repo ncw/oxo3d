@@ -26,12 +26,12 @@ var (
 	rounds     = flag.Int("rounds", 10, "Number of rounds")
 	cpuprofile = flag.String("cpuprofile", "", "Write cpu profile to file")
 	threads    = flag.Int("threads", 0, "Number of threads to use (default 1 per CPU)")
+	list       = flag.Bool("list", false, "List all the possible players")
 )
 
 type Player struct {
-	NewPlayer func(*oxo3d.Oxo3d, int) oxo3d.Player
-	Level     int
 	Name      string
+	NewPlayer oxo3d.NewPlayer
 	Score     int
 	CpuTime   time.Duration
 }
@@ -49,21 +49,23 @@ func (ps Players) Swap(i, j int) {
 	ps[i], ps[j] = ps[j], ps[i]
 }
 
-var players = Players{
-	//{NewPlayer: oxo3d.NewOxo3dRandom, Level: 0, Name: "Random"},
-	//{NewPlayer: oxo3d.NewOxo3dHeuristic, Level: 0, Name: "Heuristic0"},
-	{NewPlayer: oxo3d.NewOxo3dHeuristic, Level: 1, Name: "Heuristic1"},
-	//{NewPlayer: oxo3d.NewOxo3dHeuristic, Level: 2, Name: "Heuristic2"},
-	//{NewPlayer: oxo3d.NewOxo3dMinimax, Level: 0, Name: "Minimax0"},
-	//{NewPlayer: oxo3d.NewOxo3dMinimax, Level: 1, Name: "Minimax1"},
-	//{NewPlayer: oxo3d.NewOxo3dMinimax, Level: 2, Name: "Minimax2"},
-	//{NewPlayer: oxo3d.NewOxo3dMinimax, Level: 3, Name: "Minimax3"},
-	//{NewPlayer: oxo3d.NewOxo3dAlphaBeta, Level: 0, Name: "AlphaBeta0"},
-	{NewPlayer: oxo3d.NewOxo3dAlphaBeta, Level: 1, Name: "AlphaBeta1"},
-	{NewPlayer: oxo3d.NewOxo3dAlphaBeta, Level: 2, Name: "AlphaBeta2"},
-	{NewPlayer: oxo3d.NewOxo3dAlphaBeta, Level: 3, Name: "AlphaBeta3"},
-	{NewPlayer: oxo3d.NewOxo3dAlphaBeta, Level: 4, Name: "AlphaBeta4"},
+var defaultPlayerNames = []string{
+	"Random",
+	"Heuristic0",
+	"Heuristic1",
+	"Heuristic2",
+	// "Minimax0",
+	// "Minimax1",
+	// "Minimax2",
+	// "Minimax3",
+	// "AlphaBeta0",
+	"AlphaBeta1",
+	"AlphaBeta2",
+	"AlphaBeta3",
+	"AlphaBeta4",
 }
+
+var players Players
 
 type stats struct {
 	sync.Mutex
@@ -79,8 +81,8 @@ func doRound(a, b *Player, first bool, s *stats) {
 	defer s.wg.Done()
 	a_game := oxo3d.NewOxo3d(first)
 	b_game := oxo3d.NewOxo3d(!first)
-	a_player := a.NewPlayer(a_game, a.Level)
-	b_player := b.NewPlayer(b_game, b.Level)
+	a_player := a.NewPlayer(a_game)
+	b_player := b.NewPlayer(b_game)
 	Go := -1
 	// Make first two moves randomly
 	for i := 0; i < 2; {
@@ -165,8 +167,23 @@ func tourney(rounds int) {
 	}
 }
 
+// usage prints the syntax
+func usage() {
+	fmt.Fprintf(os.Stderr, `Oxo3d Tournament 
+
+Syntax: %s [Options] [<Player>]+
+
+Supply a list of players to engage in a tournament.  If you supply
+none then you will get a default set of players.
+
+Options:
+`, os.Args[0])
+	flag.PrintDefaults()
+}
+
 func main() {
 	// Flag for seed?
+	flag.Usage = usage
 	rand.Seed(time.Now().UnixNano())
 	flag.Parse()
 	if *threads == 0 {
@@ -184,5 +201,35 @@ func main() {
 		defer pprof.StopCPUProfile()
 	}
 
+	// List players if desired
+	if *list {
+		fmt.Printf("Players are :-\n")
+		names := []string{}
+		for name := range oxo3d.Players {
+			names = append(names, name)
+		}
+		sort.Strings(names)
+		for _, name := range names {
+			fmt.Printf("  %s\n", name)
+		}
+		return
+	}
+
+	// Work out who is playing
+	playerNames := flag.Args()
+	if len(playerNames) == 0 {
+		playerNames = defaultPlayerNames
+	}
+	for _, Name := range playerNames {
+		NewPlayer, ok := oxo3d.Players[Name]
+		if !ok {
+			log.Fatalf("Couldn't find player %v", Name)
+		}
+		player := Player{
+			Name:      Name,
+			NewPlayer: NewPlayer,
+		}
+		players = append(players, player)
+	}
 	tourney(*rounds)
 }

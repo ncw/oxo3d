@@ -5,12 +5,17 @@ import (
 	"math/rand"
 )
 
+func init () {
+	// Register this player
+	Players["Random"] = func(o *Oxo3d) Player { return NewOxo3dRandom(o) }
+}
+
 type Oxo3dRandom struct {
 	o *Oxo3d
 }
 
 // Initialise the player
-func NewOxo3dRandom(o *Oxo3d, level int) Player {
+func NewOxo3dRandom(o *Oxo3d) Player {
 	p := &Oxo3dRandom{
 		o: o,
 	}
