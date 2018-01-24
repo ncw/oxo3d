@@ -16,6 +16,7 @@ Note that the evaluation isn't being updated properly because of that - when the
 // FIXME could declare draw when no more lines are available?
 
 import (
+	"bytes"
 	"fmt"
 )
 
@@ -98,7 +99,6 @@ type Oxo3d struct {
 
 // Setup all the things which need to be done for every game.
 //  Note that the state of first is flipped for the next game
-
 func (o *Oxo3d) newGame(first bool) {
 	o.plays = make([]int, 0, 64)
 	for i := range o.board {
@@ -121,40 +121,6 @@ func NewOxo3d(first bool) *Oxo3d {
 	o.newGame(first)
 	return o
 }
-
-// Construct a new instance with the game in the same state as the instance
-//passed in
-/*
-FIXME
-func (o *Oxo3d) CopyOxo3d(that *Oxo3d, level int) {
-    	this(!that.first, level)
-        // Replay the game
-        for (int go : that.plays) {
-        	Play(go, isMyGo)
-        }
-        if (isMyGo != that.isMyGo) {
-            panic("Game replay went wrong: isMyGo")
-        }
-        if (moves != that.moves) {
-            panic("Game replay went wrong: moves")
-        }
-        if (!Arrays.equals(o.board, that.board)) {
-            panic("Game replay went wrong: board")
-        }
-        if (!plays.equals(that.plays)) {
-            panic("Game replay went wrong: plays")
-        }
-        if (winline != that.winline) {
-            panic("Game replay went wrong: winline")
-        }
-        if (!Arrays.equals(getBoard(), that.getBoard())) {
-            panic("Game replay went wrong: getBoard")
-        }
-        if (!Arrays.equals(marks(), that.marks())) {
-            panic("Game replay went wrong: marks")
-        }
-}
-*/
 
 // Returns NOONE, ME, YOU or DRAW for who won
 func (o *Oxo3d) WhoWon() int {
@@ -184,52 +150,62 @@ func (o *Oxo3d) ValidMove(Go int) bool {
 	return true
 }
 
-// Print the board
-func (o *Oxo3d) Print() {
-	win := o.WhoWon()
-	if win == ME {
-		fmt.Println("I win")
-	} else if win == YOU {
-		fmt.Println("You win")
-	} else if win == DRAW {
-		fmt.Println("A draw")
-	}
-	mark := o.Marks()
-	symbols := [3]string{"O", ".", "X"}
-	for a := 0; a < 64; a += 4 {
-		if (a & 0xC) == 0 {
-			fmt.Println("+-------------+-------------+")
-		}
-		fmt.Print("|")
-		for b := a; b < a+4; b++ {
-			fmt.Print(" ")
-			fmt.Print(symbols[o.board[b]+1])
-			if mark[b] {
-				fmt.Print("*")
-			} else {
-				fmt.Print(" ")
-			}
-		}
-		fmt.Print(" |")
-		for b := a; b < a+4; b++ {
-			fmt.Printf(" %2d", b)
-		}
-		fmt.Println(" |")
-	}
+// Board returns the state of the board at that position, either ME,
+// YOU or NOONE
+func (o *Oxo3d) Board(Go int) int {
+	return o.board[Go]
 }
 
-// return an array telling whether each board position should be marked
-func (o *Oxo3d) Marks() [64]bool {
-	var mark [64]bool
-	if o.lastGo >= 0 {
-		mark[o.lastGo] = true
+// Marked returns a flag as to whether the position should be
+// higlighted.  This will highlight the last move and any winning
+// lines.
+func (o *Oxo3d) Marked(Go int) bool {
+	if Go == o.lastGo {
+		return true
 	}
 	if o.winline >= 0 {
 		for _, a := range movet[o.winline] {
-			mark[a] = true
+			if Go == a {
+				return true
+			}
 		}
 	}
-	return mark
+	return false
+}
+
+// Turn the board into a string
+func (o *Oxo3d) String() string {
+	var buf bytes.Buffer
+	win := o.WhoWon()
+	if win == ME {
+		buf.WriteString("I win\n")
+	} else if win == YOU {
+		buf.WriteString("You win\n")
+	} else if win == DRAW {
+		buf.WriteString("A draw\n")
+	}
+	symbols := [3]string{"O", ".", "X"}
+	for a := 0; a < 64; a += 4 {
+		if (a & 0xC) == 0 {
+			buf.WriteString("+-------------+-------------+\n")
+		}
+		buf.WriteString("|")
+		for b := a; b < a+4; b++ {
+			buf.WriteString(" ")
+			buf.WriteString(symbols[o.Board(b)+1])
+			if o.Marked(b) {
+				buf.WriteString("*")
+			} else {
+				buf.WriteString(" ")
+			}
+		}
+		buf.WriteString(" |")
+		for b := a; b < a+4; b++ {
+			fmt.Fprintf(&buf, " %2d", b)
+		}
+		buf.WriteString(" |\n")
+	}
+	return buf.String()
 }
 
 // Test to see if someone won or it was a draw
@@ -299,29 +275,6 @@ func (o *Oxo3d) UnPlay() {
 		o.lines[a] -= encodedWho
 	}
 	o.isMyGo = !o.isMyGo
-}
-
-// Computer move
-//func (o *Oxo3d) CalculateMyGo() int {
-//	return 0
-//}
-
-// Do the human move
-func (o *Oxo3d) ReadYourGo() int {
-	var Go int
-	for {
-		fmt.Print("Go (0..63) ")
-		n, err := fmt.Scanf("%d", &Go)
-		if n != 1 || err != nil {
-			continue
-		}
-		if Go >= 0 && Go <= 63 && o.board[Go] == 0 {
-			break
-		}
-	}
-	fmt.Printf("Going at %d\n", Go)
-	o.YourGo(Go)
-	return Go
 }
 
 // Do the computer move

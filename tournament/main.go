@@ -8,7 +8,6 @@ package main
 // Implement reset the board newGame so it does!
 
 import (
-	"../oxo3d"
 	"flag"
 	"fmt"
 	"log"
@@ -19,6 +18,8 @@ import (
 	"sort"
 	"sync"
 	"time"
+
+	"github.com/ncw/oxo3d/oxo3d"
 )
 
 // Flags
