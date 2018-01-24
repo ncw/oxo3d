@@ -1,0 +1,249 @@
+AlphaBeta1 loses to MinMax1
+
+level AlphaBeta1 vs   Minimax1, Wins 499617, Draws     0, Losses 500383:       5089 ns vs       5101 ns (per go)
+
+
+Scores
+Player AlphaBeta1 Score  -766 CpuTime        35.487393437s
+Player   Minimax1 Score   766 CpuTime        35.572244824s
+
+
+------------------------------------------------------------
+
+AlphaBeta2 and MinMax2 identical (more or less)
+
+level AlphaBeta2 vs   Minimax2, Wins  4217, Draws  1572, Losses  4211:      65578 ns vs     184555 ns (per go)
+
+Scores
+Player   Minimax2 Score    -6 CpuTime        33.570708537s
+Player AlphaBeta2 Score     6 CpuTime         11.92946336s
+
+------------------------------------------------------------
+
+Heuristic2 beats Heuristic1
+
+Scores
+Player Heuristic1 Score -5333 CpuTime         7.058567956s
+Player Heuristic2 Score  5333 CpuTime        14.546290519s
+
+------------------------------------------------------------
+
+$ ./tournament -rounds 5000
+level Heuristic0 vs     Random, Wins  5000, Draws     0, Losses     0:       7029 ns vs        120 ns (per go)
+level Heuristic1 vs     Random, Wins  5000, Draws     0, Losses     0:       4479 ns vs        118 ns (per go)
+level Heuristic2 vs     Random, Wins  5000, Draws     0, Losses     0:       9482 ns vs        121 ns (per go)
+level AlphaBeta1 vs     Random, Wins  5000, Draws     0, Losses     0:       6272 ns vs        121 ns (per go)
+level AlphaBeta2 vs     Random, Wins  5000, Draws     0, Losses     0:      84248 ns vs        120 ns (per go)
+level AlphaBeta3 vs     Random, Wins  5000, Draws     0, Losses     0:    2232680 ns vs        140 ns (per go)
+level Heuristic1 vs Heuristic0, Wins  4935, Draws     0, Losses    65:       4255 ns vs       6609 ns (per go)
+level Heuristic2 vs Heuristic0, Wins  4583, Draws    52, Losses   365:       8306 ns vs       6028 ns (per go)
+level AlphaBeta1 vs Heuristic0, Wins  4445, Draws     0, Losses   555:       5689 ns vs       6662 ns (per go)
+level AlphaBeta2 vs Heuristic0, Wins  4943, Draws     2, Losses    55:      95408 ns vs       6635 ns (per go)
+level AlphaBeta3 vs Heuristic0, Wins  4909, Draws     0, Losses    91:    2394116 ns vs       6843 ns (per go)
+level Heuristic2 vs Heuristic1, Wins  2019, Draws  1236, Losses  1745:       7170 ns vs       3480 ns (per go)
+level AlphaBeta1 vs Heuristic1, Wins   441, Draws     4, Losses  4555:       5398 ns vs       4116 ns (per go)
+level AlphaBeta2 vs Heuristic1, Wins  2273, Draws   705, Losses  2022:      72629 ns vs       3414 ns (per go)
+level AlphaBeta3 vs Heuristic1, Wins  3139, Draws   278, Losses  1583:    2052427 ns vs       4511 ns (per go)
+level AlphaBeta1 vs Heuristic2, Wins  1688, Draws    91, Losses  3221:       6017 ns vs       9800 ns (per go)
+level AlphaBeta2 vs Heuristic2, Wins  2428, Draws  1415, Losses  1157:      73541 ns vs       8558 ns (per go)
+level AlphaBeta3 vs Heuristic2, Wins  3342, Draws   188, Losses  1470:    2119011 ns vs      10646 ns (per go)
+level AlphaBeta2 vs AlphaBeta1, Wins  4397, Draws     7, Losses   596:      94434 ns vs       5640 ns (per go)
+level AlphaBeta3 vs AlphaBeta1, Wins  4120, Draws     0, Losses   880:    2354056 ns vs       5680 ns (per go)
+level AlphaBeta3 vs AlphaBeta2, Wins  2362, Draws   104, Losses  2534:    1751069 ns vs      90255 ns (per go)
+
+
+Scores
+Player     Random Score -30000 CpuTime          14.270739ms
+Player Heuristic0 Score -17684 CpuTime          1.39870323s
+Player AlphaBeta1 Score -3798 CpuTime         1.323353885s
+Player Heuristic2 Score  7882 CpuTime         3.662881921s
+Player Heuristic1 Score 11903 CpuTime         1.401211726s
+Player AlphaBeta2 Score 15383 CpuTime        29.554534067s
+Player AlphaBeta3 Score 16314 CpuTime     11m15.613569686s
+
+------------------------------------------------------------
+	cost[OS*4] = -1E6
+	cost[OS*3] = -1E4
+	cost[OS*2] = -1E2
+	cost[OS*1] = -1
+	cost[XS*1] = 1
+	cost[XS*2] = 1E2
+	cost[XS*3] = 1E4
+	cost[XS*4] = 1E6
+
+
+ncw@dogger:~/Code/GoOxo3d/tournament$ ./tournament -rounds 5000
+level Heuristic2 vs Heuristic1, Wins  2040, Draws  1205, Losses  1755:       7295 ns vs       3530 ns (per go)
+level AlphaBeta2 vs Heuristic1, Wins  2561, Draws   821, Losses  1618:      75613 ns vs       3528 ns (per go)
+level AlphaBeta3 vs Heuristic1, Wins  2900, Draws   198, Losses  1902:    1857200 ns vs       3969 ns (per go)
+level AlphaBeta4 vs Heuristic1, Wins  3400, Draws   565, Losses  1035:   41151434 ns vs       4462 ns (per go)
+level AlphaBeta2 vs Heuristic2, Wins  2566, Draws  1394, Losses  1040:      68031 ns vs       7784 ns (per go)
+level AlphaBeta3 vs Heuristic2, Wins  3483, Draws   323, Losses  1194:    1849305 ns vs       8790 ns (per go)
+level AlphaBeta4 vs Heuristic2, Wins  3157, Draws  1317, Losses   526:   20032506 ns vs       7841 ns (per go)
+level AlphaBeta3 vs AlphaBeta2, Wins  2359, Draws   180, Losses  2461:    1741168 ns vs      90952 ns (per go)
+level AlphaBeta4 vs AlphaBeta2, Wins  2811, Draws   420, Losses  1769:   36018779 ns vs      89287 ns (per go)
+level AlphaBeta4 vs AlphaBeta3, Wins  3312, Draws   223, Losses  1465:   33511135 ns vs    1875549 ns (per go)
+
+
+Scores
+Player Heuristic2 Score -6161 CpuTime         2.844302045s
+Player Heuristic1 Score -4591 CpuTime         1.333008706s
+Player AlphaBeta3 Score  1338 CpuTime      8m37.896418265s
+Player AlphaBeta2 Score  1529 CpuTime        26.966898997s
+Player AlphaBeta4 Score  7885 CpuTime   2h54m46.764418179s
+
+------------------------------------------------------------
+
+	// My X Go
+	cost[OS*4] = -0x10000000
+	cost[OS*3] = -0x100000
+	cost[OS*2] = -0x1000
+	cost[OS*1] = -0x1
+	cost[XS*1] = 0x10 // prefer to make new lines over blocking old ones
+	cost[XS*2] = 0x1000
+	cost[XS*3] = 0x100000
+	cost[XS*4] = 0x10000000
+
+	// Your O Go
+	ycost[XS*4] = 0x10000000
+	ycost[XS*3] = 0x100000
+	ycost[XS*2] = 0x1000
+	ycost[XS*1] = 0x1 // prefer to make new lines over blocking old ones
+	ycost[OS*1] = -0x10
+	ycost[OS*2] = -0x1000
+	ycost[OS*3] = -0x100000
+	ycost[OS*4] = -0x10000000
+
+level AlphaBeta1 vs Heuristic1, Wins   465, Draws     2, Losses  4533:      16731 ns vs      12102 ns (per go)
+level AlphaBeta2 vs Heuristic1, Wins  2394, Draws   966, Losses  1640:     211046 ns vs       9195 ns (per go)
+level AlphaBeta3 vs Heuristic1, Wins  3065, Draws   215, Losses  1720:    5177277 ns vs       9523 ns (per go)
+level AlphaBeta4 vs Heuristic1, Wins  3603, Draws   450, Losses   947:  105443533 ns vs       9783 ns (per go)
+level AlphaBeta2 vs AlphaBeta1, Wins  4450, Draws     4, Losses   546:     271563 ns vs      16742 ns (per go)
+level AlphaBeta3 vs AlphaBeta1, Wins  4167, Draws    17, Losses   816:    7101851 ns vs      16918 ns (per go)
+level AlphaBeta4 vs AlphaBeta1, Wins  4736, Draws     1, Losses   263:  171678798 ns vs      17435 ns (per go)
+level AlphaBeta3 vs AlphaBeta2, Wins  2522, Draws   138, Losses  2340:    5194409 ns vs     274585 ns (per go)
+level AlphaBeta4 vs AlphaBeta2, Wins  2662, Draws   433, Losses  1905:   99879756 ns vs     259873 ns (per go)
+level AlphaBeta4 vs AlphaBeta3, Wins  3520, Draws   162, Losses  1318:   97579821 ns vs    5508230 ns (per go)
+
+
+Scores
+Player AlphaBeta1 Score -15796 CpuTime         2.795861939s
+Player Heuristic1 Score  -687 CpuTime         2.882878787s
+Player AlphaBeta3 Score  2676 CpuTime     23m14.236085779s
+Player AlphaBeta2 Score  3719 CpuTime       1m9.953685506s
+Player AlphaBeta4 Score 10088 CpuTime   8h21m21.389926969s
+
+------------------------------------------------------------
+
+	// My X Go
+	cost[OS*4] = -0x10000000
+	cost[OS*3] = -0x100000
+	cost[OS*2] = -0x1000
+	cost[OS*1] = -0x1
+	cost[XS*1] = 0x1 // prefer to make new lines over blocking old ones
+	cost[XS*2] = 0x1000
+	cost[XS*3] = 0x100000
+	cost[XS*4] = 0x10000000
+
+	// Your O Go
+	ycost[XS*4] = 0x10000000
+	ycost[XS*3] = 0x100000
+	ycost[XS*2] = 0x1000
+	ycost[XS*1] = 0x1 // prefer to make new lines over blocking old ones
+	ycost[OS*1] = -0x1
+	ycost[OS*2] = -0x1000
+	ycost[OS*3] = -0x100000
+	ycost[OS*4] = -0x10000000
+
+level AlphaBeta1 vs Heuristic1, Wins    30, Draws     0, Losses   470:      18371 ns vs      12782 ns (per go)
+level AlphaBeta2 vs Heuristic1, Wins   264, Draws    82, Losses   154:     222947 ns vs       9479 ns (per go)
+level AlphaBeta3 vs Heuristic1, Wins   304, Draws    23, Losses   173:    5250942 ns vs       9322 ns (per go)
+level AlphaBeta4 vs Heuristic1, Wins   332, Draws    57, Losses   111:  105645233 ns vs       9934 ns (per go)
+level AlphaBeta2 vs AlphaBeta1, Wins   451, Draws     2, Losses    47:     275236 ns vs      16490 ns (per go)
+level AlphaBeta3 vs AlphaBeta1, Wins   412, Draws     0, Losses    88:    6776618 ns vs      16183 ns (per go)
+level AlphaBeta4 vs AlphaBeta1, Wins   468, Draws     1, Losses    31:  178892526 ns vs      17560 ns (per go)
+level AlphaBeta3 vs AlphaBeta2, Wins   223, Draws    20, Losses   257:    4939975 ns vs     264433 ns (per go)
+level AlphaBeta4 vs AlphaBeta2, Wins   281, Draws    40, Losses   179:  105936005 ns vs     258714 ns (per go)
+level AlphaBeta4 vs AlphaBeta3, Wins   346, Draws    33, Losses   121:  101126957 ns vs    5686444 ns (per go)
+
+
+Scores
+Player AlphaBeta1 Score -1605 CpuTime         281.113556ms
+Player Heuristic1 Score   -22 CpuTime         294.698681ms
+Player AlphaBeta3 Score   196 CpuTime      2m22.063912157s
+Player AlphaBeta2 Score   446 CpuTime         7.092055843s
+Player AlphaBeta4 Score   985 CpuTime     52m42.940604873s
+
+------------------------------------------------------------
+	cost[OS*4] = -0x10000000
+	cost[OS*3] = -0x100000
+	cost[OS*2] = -0x1000
+	cost[OS*1] = -0x1
+	cost[XS*1] = 0x4 // prefer to make new lines over blocking old ones
+	cost[XS*2] = 0x1000
+	cost[XS*3] = 0x100000
+	cost[XS*4] = 0x10000000
+
+level AlphaBeta1 vs Heuristic1, Wins    48, Draws     0, Losses   452:      15311 ns vs      10516 ns (per go)
+level AlphaBeta2 vs Heuristic1, Wins   250, Draws    94, Losses   156:     186357 ns vs       8651 ns (per go)
+level AlphaBeta3 vs Heuristic1, Wins   300, Draws    31, Losses   169:    4551712 ns vs       8289 ns (per go)
+level AlphaBeta4 vs Heuristic1, Wins   343, Draws    55, Losses   102:   91509999 ns vs       8972 ns (per go)
+level AlphaBeta2 vs AlphaBeta1, Wins   447, Draws     1, Losses    52:     242252 ns vs      13650 ns (per go)
+level AlphaBeta3 vs AlphaBeta1, Wins   417, Draws     1, Losses    82:    5998076 ns vs      14015 ns (per go)
+level AlphaBeta4 vs AlphaBeta1, Wins   470, Draws     0, Losses    30:  140039676 ns vs      14408 ns (per go)
+level AlphaBeta3 vs AlphaBeta2, Wins   269, Draws    10, Losses   221:    4429436 ns vs     231743 ns (per go)
+level AlphaBeta4 vs AlphaBeta2, Wins   246, Draws    40, Losses   214:   82850730 ns vs     212089 ns (per go)
+level AlphaBeta4 vs AlphaBeta3, Wins   337, Draws    26, Losses   137:   79795808 ns vs    4642241 ns (per go)
+
+
+Scores
+Player AlphaBeta1 Score -1574 CpuTime         237.906496ms
+Player Heuristic1 Score   -62 CpuTime         258.293023ms
+Player AlphaBeta3 Score   314 CpuTime       2m0.394361628s
+Player AlphaBeta2 Score   409 CpuTime         5.975639117s
+Player AlphaBeta4 Score   913 CpuTime     42m14.443066787s
+
+------------------------------------------------------------
+
+commit a9a6ee94fff064398cc956a45e932aefb7618d60
+
+$ time ./tournament -rounds 2500
+level Heuristic0 vs     Random, Wins  2500, Draws     0, Losses     0:     182041 ns vs       3506 ns (per go)
+level Heuristic1 vs     Random, Wins  2500, Draws     0, Losses     0:      17193 ns vs       1502 ns (per go)
+level Heuristic2 vs     Random, Wins  2500, Draws     0, Losses     0:      24100 ns vs        789 ns (per go)
+level AlphaBeta1 vs     Random, Wins  2500, Draws     0, Losses     0:      18244 ns vs       1320 ns (per go)
+level AlphaBeta2 vs     Random, Wins  2500, Draws     0, Losses     0:     220337 ns vs        307 ns (per go)
+level AlphaBeta3 vs     Random, Wins  2500, Draws     0, Losses     0:    6296231 ns vs        318 ns (per go)
+level AlphaBeta4 vs     Random, Wins  2500, Draws     0, Losses     0:   88652221 ns vs        413 ns (per go)
+level Heuristic1 vs Heuristic0, Wins  2470, Draws     0, Losses    30:      10722 ns vs     145330 ns (per go)
+level Heuristic2 vs Heuristic0, Wins  2274, Draws    22, Losses   204:      17717 ns vs     120008 ns (per go)
+level AlphaBeta1 vs Heuristic0, Wins  2185, Draws     0, Losses   315:      14914 ns vs     146380 ns (per go)
+level AlphaBeta2 vs Heuristic0, Wins  2465, Draws     1, Losses    34:     248772 ns vs      51983 ns (per go)
+level AlphaBeta3 vs Heuristic0, Wins  2470, Draws     0, Losses    30:    6134420 ns vs      19663 ns (per go)
+level AlphaBeta4 vs Heuristic0, Wins  2489, Draws     1, Losses    10:  133985769 ns vs      15304 ns (per go)
+level Heuristic2 vs Heuristic1, Wins  1002, Draws   642, Losses   856:      16801 ns vs       8780 ns (per go)
+level AlphaBeta1 vs Heuristic1, Wins   242, Draws     2, Losses  2256:      15445 ns vs      10625 ns (per go)
+level AlphaBeta2 vs Heuristic1, Wins  1187, Draws   486, Losses   827:     184999 ns vs       8261 ns (per go)
+level AlphaBeta3 vs Heuristic1, Wins  1470, Draws   124, Losses   906:    4577929 ns vs       8403 ns (per go)
+level AlphaBeta4 vs Heuristic1, Wins  1775, Draws   216, Losses   509:   93224450 ns vs       8681 ns (per go)
+level AlphaBeta1 vs Heuristic2, Wins   864, Draws    45, Losses  1591:      13980 ns vs      20328 ns (per go)
+level AlphaBeta2 vs Heuristic2, Wins  1326, Draws   621, Losses   553:     156175 ns vs      16215 ns (per go)
+level AlphaBeta3 vs Heuristic2, Wins  1848, Draws    81, Losses   571:    4485952 ns vs      19077 ns (per go)
+level AlphaBeta4 vs Heuristic2, Wins  1599, Draws   660, Losses   241:   49535585 ns vs      16807 ns (per go)
+level AlphaBeta2 vs AlphaBeta1, Wins  2220, Draws     1, Losses   279:     234968 ns vs      13948 ns (per go)
+level AlphaBeta3 vs AlphaBeta1, Wins  2095, Draws     9, Losses   396:    6054260 ns vs      13851 ns (per go)
+level AlphaBeta4 vs AlphaBeta1, Wins  2388, Draws     0, Losses   112:  151574104 ns vs      14706 ns (per go)
+level AlphaBeta3 vs AlphaBeta2, Wins  1266, Draws    59, Losses  1175:    4487537 ns vs     237976 ns (per go)
+level AlphaBeta4 vs AlphaBeta2, Wins  1319, Draws   193, Losses   988:   86538385 ns vs     223163 ns (per go)
+level AlphaBeta4 vs AlphaBeta3, Wins  1740, Draws    85, Losses   675:   82880581 ns vs    4723343 ns (per go)
+
+
+Scores
+Player     Random Score -17500 CpuTime          72.668289ms
+Player Heuristic0 Score -11230 CpuTime        11.566381123s
+Player AlphaBeta1 Score -4287 CpuTime         1.986581221s
+Player Heuristic2 Score  2035 CpuTime         4.541039129s
+Player Heuristic1 Score  4618 CpuTime         2.045918566s
+Player AlphaBeta3 Score  7506 CpuTime     15m51.072079818s
+Player AlphaBeta2 Score  7583 CpuTime         45.25277786s
+Player AlphaBeta4 Score 11275 CpuTime   5h19m56.462822686s

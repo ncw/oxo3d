@@ -1,0 +1,25 @@
+Android version has
+
+Easy Oxo3dHeuristic(game, 0)
+Simple Oxo3dHeuristic(game, 1)
+Sneaky Oxo3dHeuristic(game, 2)
+Relentless Oxo3dAlphaBeta(game, 2)
+Hard Oxo3dAlphaBeta(game, 3)
+Very Hard Oxo3dAlphaBeta(game, 4)
+
+Ordering is such that next higher level beats the one below always.
+This isn't a strict ordering though as the full tournament results
+show.
+
+level Heuristic1 vs Heuristic0, Wins   992, Draws     0, Losses     8:      17644 ns vs     212370 ns (per go)
+level Heuristic2 vs Heuristic1, Wins   414, Draws   241, Losses   345:      17307 ns vs       8854 ns (per go)
+level AlphaBeta2 vs Heuristic2, Wins   534, Draws   240, Losses   226:     160184 ns vs      16770 ns (per go)
+level AlphaBeta3 vs AlphaBeta2, Wins   530, Draws    25, Losses   445:    4472157 ns vs     236999 ns (per go)
+level AlphaBeta4 vs AlphaBeta3, Wins   667, Draws    41, Losses   292:   83954340 ns vs    4768929 ns (per go)
+
+./tournament -rounds 1000 Heuristic0 Heuristic1
+./tournament -rounds 1000 Heuristic1 Heuristic2
+./tournament -rounds 1000 Heuristic2 AlphaBeta2
+./tournament -rounds 1000 AlphaBeta2 AlphaBeta3
+./tournament -rounds 1000 AlphaBeta3 AlphaBeta4
+
