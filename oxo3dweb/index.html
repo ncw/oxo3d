@@ -1,0 +1,149 @@
+<!doctype html>
+<html>
+    <head>
+        <script src="oxo3dweb.js"></script>
+        <style>
+         table#board {
+         }
+         table#board tr {
+             height: 1.5em;
+         }
+         table#board tr.spacer {
+             height: .5em;
+         }
+         table#board tr td {
+             width: 1.5em;
+             background: #ccc;
+             text-align: center;
+             vertical-align: middle;
+         }
+         table#board tr td.marked {
+             background: #8c8;
+         }
+         p#message {
+             background: #cc4;
+         }
+        </style>
+    </head>
+    <body>
+        <form id="newGameForm" onSubmit="return false;">
+            Level
+            <select name="level" id="level">
+                <option value="0">Easy</option>
+                <option value="1">Simple</option>
+                <option value="2">Sneaky</option>
+                <option value="3">Relentless</option>
+                <option value="4">Hard</option>
+                <option value="5">Very Hard</option>
+            </select>
+            Go First
+            <select name="first" id="first">
+                <option value="no">No</option>
+                <option value="yes">Yes</option>
+            </select>
+            <button id="newGame">New Game</button>
+        </form>
+        <table id="board">
+            <tr>
+                <td id="sq00"></td>
+                <td id="sq01"></td>
+                <td id="sq02"></td>
+                <td id="sq03"></td>
+            </tr>
+            <tr>
+                <td id="sq04"></td>
+                <td id="sq05"></td>
+                <td id="sq06"></td>
+                <td id="sq07"></td>
+            </tr>
+            <tr>
+                <td id="sq08"></td>
+                <td id="sq09"></td>
+                <td id="sq10"></td>
+                <td id="sq11"></td>
+            </tr>
+            <tr>
+                <td id="sq12"></td>
+                <td id="sq13"></td>
+                <td id="sq14"></td>
+                <td id="sq15"></td>
+            </tr>
+            <tr class="spacer"></tr>
+            <tr>
+                <td id="sq16"></td>
+                <td id="sq17"></td>
+                <td id="sq18"></td>
+                <td id="sq19"></td>
+            </tr>
+            <tr>
+                <td id="sq20"></td>
+                <td id="sq21"></td>
+                <td id="sq22"></td>
+                <td id="sq23"></td>
+            </tr>
+            <tr>
+                <td id="sq24"></td>
+                <td id="sq25"></td>
+                <td id="sq26"></td>
+                <td id="sq27"></td>
+            </tr>
+            <tr>
+                <td id="sq28"></td>
+                <td id="sq29"></td>
+                <td id="sq30"></td>
+                <td id="sq31"></td>
+            </tr>
+            <tr class="spacer"></tr>
+            <tr>
+                <td id="sq32"></td>
+                <td id="sq33"></td>
+                <td id="sq34"></td>
+                <td id="sq35"></td>
+            </tr>
+            <tr>
+                <td id="sq36"></td>
+                <td id="sq37"></td>
+                <td id="sq38"></td>
+                <td id="sq39"></td>
+            </tr>
+            <tr>
+                <td id="sq40"></td>
+                <td id="sq41"></td>
+                <td id="sq42"></td>
+                <td id="sq43"></td>
+            </tr>
+            <tr>
+                <td id="sq44"></td>
+                <td id="sq45"></td>
+                <td id="sq46"></td>
+                <td id="sq47"></td>
+            </tr>
+            <tr class="spacer"></tr>
+            <tr>
+                <td id="sq48"></td>
+                <td id="sq49"></td>
+                <td id="sq50"></td>
+                <td id="sq51"></td>
+            </tr>
+            <tr>
+                <td id="sq52"></td>
+                <td id="sq53"></td>
+                <td id="sq54"></td>
+                <td id="sq55"></td>
+            </tr>
+            <tr>
+                <td id="sq56"></td>
+                <td id="sq57"></td>
+                <td id="sq58"></td>
+                <td id="sq59"></td>
+            </tr>
+            <tr>
+                <td id="sq60"></td>
+                <td id="sq61"></td>
+                <td id="sq62"></td>
+                <td id="sq63"></td>
+            </tr>
+        </table>
+        <p id="message">Message</p>
+    </body>
+</html>

@@ -1,0 +1,4 @@
+#!/bin/sh
+gopherjs build -m
+rclone -v copy --include="*.{js,css,html}" . box:public_html/oxo3d
+echo See https://www.craig-wood.com/nick/oxo3d/
