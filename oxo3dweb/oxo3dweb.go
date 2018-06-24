@@ -15,6 +15,7 @@ var (
 	player   = oxo3d.NewOxo3dHeuristic(board, 0)
 	symbols  = [3]string{"O", "", "X"}
 	square   [64]*js.Object
+	viewMap  [64]int // mapping for the view
 	document *js.Object
 	messageP *js.Object
 )
@@ -46,8 +47,9 @@ func message(text string) {
 // Fills in the board with the state of the game
 func draw() {
 	for i := range square {
-		square[i].Set("innerHTML", symbols[board.Board(i)+1])
-		if board.Marked(i) {
+		p := viewMap[i]
+		square[i].Set("innerHTML", symbols[board.Board(p)+1])
+		if board.Marked(p) {
 			square[i].Call("setAttribute", "class", "marked")
 		} else {
 			square[i].Call("removeAttribute", "class")
@@ -77,6 +79,7 @@ func checkState() {
 
 // Called when a square is clicked
 func clickSquare(Go int) bool {
+	Go = viewMap[Go]
 	if board.GameOver() {
 		return false
 	}
@@ -94,6 +97,39 @@ func clickSquare(Go int) bool {
 	board.YourGo(Go)
 	draw()
 	checkState()
+	return false
+}
+
+// Set viewMap to describe the current orientation
+func setOrientation(orientation int) {
+	stride := 1
+	switch orientation {
+	case 0:
+		stride = 1
+	case 1:
+		stride = 4
+	case 2:
+		stride = 16
+	default:
+		message("unknown orientation")
+		return
+	}
+	// swizzle the viewMap
+	p := 0
+	for i := range square {
+		viewMap[i] = p
+		p += stride
+		if p >= len(square) {
+			p -= len(square)
+			p += 1
+		}
+	}
+}
+
+// Called when an orientation is clicked
+func clickOrientation(orientation int) bool {
+	setOrientation(orientation)
+	draw()
 	return false
 }
 
@@ -144,7 +180,13 @@ func initialise() int {
 	// attach handler for new game
 	getElementById("newGame").Call("setAttribute", "onclick", "oxo3dweb.newGame(); return false;")
 
+	// attach handler for orientation changes
+	for orientation := 0; orientation < 3; orientation++ {
+		getElementById(fmt.Sprintf("orientation%d", orientation)).Call("setAttribute", "onclick", fmt.Sprintf("oxo3dweb.clickOrientation(%d); return true;", orientation))
+	}
+
 	// draw the board
+	setOrientation(0)
 	draw()
 	checkState()
 	return 0
@@ -159,8 +201,9 @@ func main() {
 
 	// expose functions to javascript
 	js.Global.Set("oxo3dweb", map[string]interface{}{
-		"clickSquare": clickSquare,
-		"newGame":     newGame,
+		"clickSquare":      clickSquare,
+		"clickOrientation": clickOrientation,
+		"newGame":          newGame,
 	})
 
 	// find the document
