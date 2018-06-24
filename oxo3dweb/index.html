@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
-    <head>
+  <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="oxo3dweb.js"></script>
         <style>
          table#board {
@@ -20,29 +21,48 @@
          table#board tr td.marked {
              background: #8c8;
          }
+         table#controls {
+             background-color: #CCF;
+         }
+         table#controls th {
+             text-align: left;
+         }
+         table#controls td {
+             text-align: right;
+         }
          p#message {
              background: #cc4;
          }
         </style>
     </head>
     <body>
-        <form id="newGameForm" onSubmit="return false;">
-            Level
-            <select name="level" id="level">
+      <form id="newGameForm" onSubmit="return false;">
+        <table id="controls">
+          <tr>
+            <th>Level</th>
+            <td><select name="level" id="level">
                 <option value="0">Easy</option>
                 <option value="1">Simple</option>
                 <option value="2">Sneaky</option>
                 <option value="3">Relentless</option>
                 <option value="4">Hard</option>
                 <option value="5">Very Hard</option>
-            </select>
-            Go First
-            <select name="first" id="first">
+            </select></td>
+          </tr>
+          <tr>
+            <th>Go First</th>
+            <td><select name="first" id="first">
                 <option value="no">No</option>
                 <option value="yes">Yes</option>
-            </select>
-            <button id="newGame">New Game</button>
-        </form>
+            </select></td>
+          </tr>
+          <tr>
+            <th>New Game</th>
+            <td><button id="newGame">Go</button></td>
+          </tr>
+          </tr>
+        </table>
+      </form>
         <table id="board">
             <tr>
                 <td id="sq00"></td>
