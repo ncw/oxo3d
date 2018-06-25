@@ -18,6 +18,7 @@ var (
 	viewMap  [64]int // mapping for the view
 	document *js.Object
 	messageP *js.Object
+	helpSpan *js.Object
 )
 
 func init() {
@@ -133,6 +134,45 @@ func clickOrientation(orientation int) bool {
 	return false
 }
 
+const helpMessage = `
+<h2>Oxo 3D</h1>
+
+<p><em>Oxo 3D</em> is a 3 dimensional (4x4x4) noughts-and-crosses /
+tic-tac-toe game for the web browser.  This is a game with
+considerably more strategy than the traditional 3x3 version.</p>
+
+<h3>Quick start</h3>
+
+<p>You're O and you have to get 4 in a row.  The board is a cube
+viewed in slices.  Imagine the 4 slices piled on top of each other.</p>
+
+<p>Touch the left side of the screen to play.  Rotate the cube on the
+right side by dragging.</p>
+
+<p>Watch out for tricky diagonal lines! (Use the X, Y Z buttons to
+view the cube in different orientations.)</p>
+
+<p>Good luck!</p>
+
+PS For source code and more info see the <a href="https://github.com/ncw/oxo3d" target="_blank">oxo3d project on github</a>.
+`
+
+// Called when help is clicked
+func clickHelp(this *js.Object) bool {
+	status := this.Get("innerHTML").String()
+	var help string
+	if status == "Show" {
+		status = "Hide"
+		help = helpMessage
+	} else {
+		status = "Show"
+		help = ""
+	}
+	helpSpan.Set("innerHTML", help)
+	this.Set("innerHTML", status)
+	return false
+}
+
 func newGame() bool {
 	form := getElementById("newGameForm")
 	level := form.Get("level").Get("value").Int()
@@ -185,6 +225,10 @@ func initialise() int {
 		getElementById(fmt.Sprintf("orientation%d", orientation)).Call("setAttribute", "onclick", fmt.Sprintf("oxo3dweb.clickOrientation(%d); return true;", orientation))
 	}
 
+	// attach handler for help
+	getElementById("help").Call("setAttribute", "onclick", "oxo3dweb.clickHelp(this); return false;")
+	helpSpan = getElementById("showHelp")
+
 	// draw the board
 	setOrientation(0)
 	draw()
@@ -203,6 +247,7 @@ func main() {
 	js.Global.Set("oxo3dweb", map[string]interface{}{
 		"clickSquare":      clickSquare,
 		"clickOrientation": clickOrientation,
+		"clickHelp":        clickHelp,
 		"newGame":          newGame,
 	})
 
