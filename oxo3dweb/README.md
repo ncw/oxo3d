@@ -7,6 +7,8 @@ code runs in your browser - there is no server component.
 
 You can see it in action here: https://www.craig-wood.com/nick/oxo3d/
 
+See also: the [go/wasm version](https://github.com/ncw/oxo3d/tree/master/oxo3dwasm).
+
 ## Testing ##
 
 Run
